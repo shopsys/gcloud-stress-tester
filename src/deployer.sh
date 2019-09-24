@@ -13,12 +13,12 @@ gcloud compute instances create \
 	--image=ubuntu-1804-bionic-v20190911 \
 	--image-project=ubuntu-os-cloud
 
-gcloud beta compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} --command="sudo apt update -y && \
-sudo apt install curl git -y && \
+gcloud beta compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} --command="sudo apt-get update -y && \
+sudo apt-get install curl git -y && \
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
 sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable' && \
-sudo apt update -y && \
-sudo apt install docker docker-compose -y && \
+sudo apt-get update -y && \
+sudo apt-get install docker docker-compose -y && \
 sudo usermod -aG docker ${SERVICE_ACCOUNT_LOGIN} && \
 git clone https://github.com/shopsys/shopsys.git && \
 cd shopsys && \
