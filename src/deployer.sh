@@ -1,5 +1,7 @@
 #! /bin/bash -ex
 
+./src/variable_validator.sh
+
 gcloud auth activate-service-account --key-file /tmp/infrastructure/google-cloud/service-account.json
 
 # Set project by ID into gcloud config
