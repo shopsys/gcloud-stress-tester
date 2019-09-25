@@ -17,7 +17,10 @@ gcloud compute instances create \
 
 gcloud compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} \
     --command="sudo apt-get update -y &&
-        sudo apt-get install curl git -y &&
+        sudo apt-get -f install -y &&
+        sudo apt-get autoremove -y &&
+        sudo apt-get install curl git software-properties-common -y &&
+        sudo apt-get update -y &&
         curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - &&
         sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable' &&
         sudo apt-get update -y &&
