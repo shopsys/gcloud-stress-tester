@@ -10,7 +10,7 @@ gcloud compute instances create \
 	${INSTANCE_NAME} \
 	--machine-type=n1-standard-4 \
 	--boot-disk-size=100GB \
-	--image=ubuntu-1804-bionic-v20190911 \
+	--image-family=ubuntu-minimal-1804-lts \
 	--image-project=ubuntu-os-cloud
 
 gcloud compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} --command="sudo apt-get update -y && \
