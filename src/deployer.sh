@@ -13,7 +13,7 @@ gcloud compute instances create \
 	--image=ubuntu-1804-bionic-v20190911 \
 	--image-project=ubuntu-os-cloud
 
-gcloud beta compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} --command="sudo apt-get update -y && \
+gcloud compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} --command="sudo apt-get update -y && \
 sudo apt-get install curl git -y && \
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
 sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable' && \
@@ -29,13 +29,13 @@ EXTERNAL_IP=$(gcloud compute instances describe ${INSTANCE_NAME} --format='get(n
 echo ${EXTERNAL_IP} >> /code/build-${BUILD_NUMBER}/ip-address
 
 # These seds are required for older versions of Shopsys which was not prepared for automated installing (fixing user rights and allocating a pseudo TTY)
-gcloud beta compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} --command='cd shopsys/project-base && \
+gcloud compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} --command='cd shopsys/project-base && \
 sed -i -r "s#www_data_uid: [0-9]+#www_data_uid: $(id -u)#" docker/conf/docker-compose.yml.dist && \
 sed -i -r "s#www_data_gid: [0-9]+#www_data_gid: $(id -g)#" docker/conf/docker-compose.yml.dist && \
 sed -i -r "s#docker-compose exec php-fpm#docker-compose exec -T php-fpm#" ./scripts/install.sh && \
 echo 1 | ./scripts/install.sh'
 
-gcloud beta compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} --command="cd shopsys/project-base && \
+gcloud compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} --command="cd shopsys/project-base && \
 sed -i -r \"s#127\.0\.0\.1#${EXTERNAL_IP}#\" ./app/config/domains_urls.yml && \
 docker-compose exec -T php-fpm php phing test-db-performance && \
 sed -i -r \"s#database_name: shopsys#database_name: shopsys-test#g\" ./app/config/parameters.yml && \
