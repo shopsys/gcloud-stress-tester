@@ -1,5 +1,6 @@
 #! /bin/bash -ex
 
+# Validate required ENV variables
 ./src/variable_validator.sh
 
 gcloud auth activate-service-account --key-file /tmp/infrastructure/google-cloud/service-account.json
