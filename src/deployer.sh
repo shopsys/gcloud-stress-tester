@@ -13,14 +13,13 @@ gcloud compute instances create \
     ${INSTANCE_NAME} \
     --machine-type=n1-standard-4 \
     --boot-disk-size=100GB \
-    --image-family=ubuntu-minimal-1804-lts \
-    --image-project=ubuntu-os-cloud
+    --image-family=debian-10 \
+    --image-project=debian-cloud
 
 gcloud compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} \
     --command="sudo apt-get update -y &&
         sudo apt-get install git software-properties-common -y &&
-        sudo apt-get update -y &&
-        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - &&
+        curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - &&
         sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable' &&
         sudo apt-get update -y &&
         sudo apt-get install docker docker-compose -y &&
