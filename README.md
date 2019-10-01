@@ -4,8 +4,7 @@ Internal package. Designed to automated deploying scalable ecommerce platform [S
 
 There are scripts for easy managing GCP. Those scripts enables you to:
 
-* create a single virtual machine and run SSFW via docker-compose
-* load huge amount of data are loaded into SSFW and set production environment
+* create a single virtual machine and run SSFW via docker-compose (load huge amount of data are loaded into SSFW and set production environment)
 * delete whole instance on GCP
 
 ## Usage
