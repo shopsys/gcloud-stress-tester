@@ -1,6 +1,11 @@
 # GCP SSFW Deployer
 
-Creates a single Compute Engine instance of SSFW.
+Internal package. Designed to automated deploying SSFW in GCP for stress testing.
+
+Scripts for easy managing GCP.
+Creates a single virtual machine and run SSFW via docker-compose.
+Huge amount of data are loaded into in and production environment is set.
+Whole instance might be easily deleted as well.  
 
 ## Usage
 ### Deploying a new instance
