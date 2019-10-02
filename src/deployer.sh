@@ -43,7 +43,5 @@ gcloud compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} \
 gcloud compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} \
     --command="cd shopsys/project-base &&
         sed -i -r \"s#127\.0\.0\.1#${EXTERNAL_IP}#\" ./app/config/domains_urls.yml &&
-        docker-compose exec -T php-fpm php phing test-db-performance &&
-        sed -i -r \"s#database_name: shopsys#database_name: shopsys-test#g\" ./app/config/parameters.yml &&
         docker-compose exec -T php-fpm bin/console shopsys:environment:change prod &&
         docker-compose exec -T php-fpm php phing clean"
