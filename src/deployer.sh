@@ -40,10 +40,16 @@ gcloud compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} \
         sed -i -r "s#docker-compose exec php-fpm#docker-compose exec -T php-fpm#" ./project-base/scripts/install.sh &&
         echo 1 | ./project-base/scripts/install.sh'
 
+if gcloud compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} --command="test -d shopsys/project-base/app/config"; then
+    CONFIG_PATH='project-base/app/config'
+else
+    CONFIG_PATH='project-base/config'
+fi
+
 gcloud compute ssh ${SERVICE_ACCOUNT_LOGIN}@${INSTANCE_NAME} \
     --command="cd shopsys &&
-        sed -i -r \"s#127\.0\.0\.1#${EXTERNAL_IP}#\" ./project-base/app/config/domains_urls.yml &&
+        sed -i -r \"s#127\.0\.0\.1#${EXTERNAL_IP}#\" ./${CONFIG_PATH}/domains_urls.yml &&
         docker-compose exec -T php-fpm php phing test-db-performance &&
-        sed -i -r \"s#database_name: shopsys#database_name: shopsys-test#g\" ./project-base/app/config/parameters.yml &&
+        sed -i -r \"s#database_name: shopsys#database_name: shopsys-test#g\" ./${CONFIG_PATH}/parameters.yml &&
         docker-compose exec -T php-fpm bin/console shopsys:environment:change prod &&
         docker-compose exec -T php-fpm php phing clean"
